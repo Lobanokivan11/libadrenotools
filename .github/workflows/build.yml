@@ -23,7 +23,7 @@ jobs:
     - name: Upload
       uses: softprops/action-gh-release@v1
       with:
-        body: libadrenotools package
+        body: libadrenotools package NOTE! Package is using only For Developers Not Users
         tag_name: github_run
         name: Action Release
         files: |
