@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: "0 * * * *"
+
+jobs:
+  start_building_turnip:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Prepare environment
+      run: |
+        sudo sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
+        sudo apt update
+        sudo apt upgrade -y
+
+    - name: Execute build script
+      run: bash ./build.sh
+
+    - name: Upload
+      uses: softprops/action-gh-release@v1
+      with:
+        body: libadrenotools package
+        tag_name: github_run
+        name: Action Release
+        files: |
+           prebuilt.zip
